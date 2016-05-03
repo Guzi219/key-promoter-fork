@@ -1,5 +1,4 @@
-<!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
-<idea-plugin>
+<idea-plugin version="2">
   <name>Key promoter</name>
   <description>Shows to user how easy he can make same action using only keyboard(menus and toolbar button mouse clicks initiates
     shortcut display)
@@ -88,9 +87,9 @@
   <!-- Mark the plugin as compatible with RubyMine and other products based on the IntelliJ platform -->
   <depends>com.intellij.modules.lang</depends>
   <extensions defaultExtensionNs="com.intellij">
-    <applicationService serviceImplementation="org.jetbrains.contest.keypromoter.KeyPromoterPersistentStats"/>
+    <applicationService serviceImplementation="org.jetbrains.contest.keypromoter.KeyPromoterPersistentStats" />
     <toolWindow id="Key Promoter" anchor="right"
-                factoryClass="org.jetbrains.contest.keypromoter.KeyPromoterToolWindowFactory">
-    </toolWindow>
+                factoryClass="org.jetbrains.contest.keypromoter.KeyPromoterToolWindowFactory" />
+    <applicationConfigurable id="keyPromoterConfiguration" displayName="Key Promoter" instance="org.jetbrains.contest.keypromoter.KeyPromoterConfiguration" groupId="other"/>
   </extensions>
 </idea-plugin>
