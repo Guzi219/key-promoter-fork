@@ -2,3 +2,6 @@
 *.iml
 key-promoter.jar
 out/
+gradle.properties
+.gradle/
+build/
