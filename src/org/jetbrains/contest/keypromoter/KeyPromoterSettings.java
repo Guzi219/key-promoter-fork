@@ -1,12 +1,26 @@
 package org.jetbrains.contest.keypromoter;
 
+import com.intellij.openapi.components.PersistentStateComponent;
+import com.intellij.openapi.components.State;
+import com.intellij.openapi.components.Storage;
+import com.intellij.util.xmlb.XmlSerializerUtil;
+import org.jetbrains.annotations.Nullable;
+
 import java.awt.*;
 
 /**
  * Settings for KeyPromoter plugin.
  * @author Dmitry Kashin
  */
-public class KeyPromoterSettings {
+@State(
+        name = "KeyPromoterSettings",
+        storages = {
+                @Storage(
+                        file = "$APP_CONFIG$/KeyPromoterSettings.xml",
+                        id = "KeyPromoterSettings"
+                )}
+)
+public class KeyPromoterSettings implements PersistentStateComponent<KeyPromoterSettings> {
 
     /** Color of text in popup */
     public Color textColor = Color.BLACK;
@@ -182,5 +196,16 @@ public class KeyPromoterSettings {
         result = 31 * result + (fixedTipPosistion ? 1 : 0);
         result = 31 * result + (popupTemplate != null ? popupTemplate.hashCode() : 0);
         return result;
+    }
+
+    @Nullable
+    @Override
+    public KeyPromoterSettings getState() {
+        return this;
+    }
+
+    @Override
+    public void loadState(KeyPromoterSettings keyPromoterSettings) {
+        XmlSerializerUtil.copyBean(keyPromoterSettings, this);
     }
 }

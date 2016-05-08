@@ -1,6 +1,7 @@
 package org.jetbrains.contest.keypromoter;
 
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.components.ServiceManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,19 +14,19 @@ import java.awt.geom.Rectangle2D;
  */
 public class TipWindow extends JWindow {
 
+    private KeyPromoterSettings keyPromoterSettings = ServiceManager.getService(KeyPromoterSettings.class);
+
     public TipWindow(Frame owner, String text, Component sourceComponent) {
         super(owner);
-        KeyPromoterConfiguration component = ApplicationManager.getApplication().getComponent(KeyPromoterConfiguration.class);
-        KeyPromoterSettings mySettings = component.getSettings();
         setAlwaysOnTop(true);
         JPanel contentPane = new JPanel(new BorderLayout());
         contentPane.setOpaque(false);
         setContentPane(contentPane);
-        TipLabel myTip = new TipLabel(text, mySettings);
+        TipLabel myTip = new TipLabel(text, keyPromoterSettings);
         add(myTip);
         pack();
         // If fixed position to show then place it at the bottom of screen, otherwise show it at the mouse click position
-        if (mySettings.isFixedTipPosition()) {
+        if (keyPromoterSettings.isFixedTipPosition()) {
             setLocation(owner.getX() + (int) (owner.getWidth() - myTip.getSize().getWidth()) / 2,
                     owner.getY() + (int) (owner.getHeight() - myTip.getSize().getHeight() - 100));
         } else {
@@ -46,15 +47,15 @@ public class TipWindow extends JWindow {
         private float myAlphaValue;
         private static final float ALPHA_STEP = 0.1f;
         private static final float START_ALPHA = 0f;
-        private KeyPromoterSettings mySettings;
+        private KeyPromoterSettings keyPromoterSettings;
 
-        public TipLabel(String text, KeyPromoterSettings mySettings) {
+        public TipLabel(String text, KeyPromoterSettings keyPromoterSettings) {
             super();
-            this.mySettings = mySettings;
+            this.keyPromoterSettings = keyPromoterSettings;
             myAlphaValue = 0.5f;
             setOpaque(false);
             setText(text);
-            setForeground(mySettings.getTextColor());
+            setForeground(keyPromoterSettings.getTextColor());
         }
 
         // some painting fun
@@ -75,7 +76,7 @@ public class TipWindow extends JWindow {
             }
 
             // Set the composite on the Graphics2D object.
-            g2d.setColor(mySettings.getBorderColor());
+            g2d.setColor(keyPromoterSettings.getBorderColor());
             g2d.setComposite(alphaComp);
 
             Area border = new Area(new Rectangle2D.Double(0, 0, getWidth(), getHeight()));
@@ -84,7 +85,7 @@ public class TipWindow extends JWindow {
 
             // Restore the old composite.
             g2d.setComposite(oldComp);
-            Color backgroundColor = mySettings.getBackgroundColor();
+            Color backgroundColor = keyPromoterSettings.getBackgroundColor();
             g2d.setColor(new Color(backgroundColor.getRed(), backgroundColor.getGreen(), backgroundColor.getBlue(), 64));
             g2d.fillRect(3, 3, getWidth() - 6, getHeight() - 6);
             super.paintComponent(g);

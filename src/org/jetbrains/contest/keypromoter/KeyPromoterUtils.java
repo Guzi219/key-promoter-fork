@@ -3,6 +3,7 @@ package org.jetbrains.contest.keypromoter;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.Shortcut;
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.keymap.KeymapUtil;
 import com.intellij.openapi.util.text.StringUtil;
 
@@ -14,6 +15,9 @@ import java.text.MessageFormat;
  * Time: 15:01:47
  */
 public class KeyPromoterUtils {
+
+    private static KeyPromoterSettings keyPromoterSettings = ServiceManager.getService(KeyPromoterSettings.class);
+
     /**
      * Get first field of class with target type to use during click source handling.
      *
@@ -43,9 +47,8 @@ public class KeyPromoterUtils {
      * @return
      */
     public static String renderMessage(String description, String shortcutText, Integer count) {
-        KeyPromoterConfiguration keyPromoterConfiguration = ApplicationManager.getApplication().getComponent(KeyPromoterConfiguration.class);
-        KeyPromoterSettings settings = keyPromoterConfiguration.getSettings();
-        return MessageFormat.format(settings.getPopupTemplate(),
+
+        return MessageFormat.format(keyPromoterSettings.getPopupTemplate(),
                 (StringUtil.isEmpty(description) ? shortcutText : shortcutText + "<br>(" + description + ")"),
                 count);
     }

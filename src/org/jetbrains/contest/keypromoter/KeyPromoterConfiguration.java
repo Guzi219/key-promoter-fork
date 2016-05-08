@@ -1,8 +1,7 @@
 package org.jetbrains.contest.keypromoter;
 
-import com.intellij.openapi.components.PersistentStateComponent;
-import com.intellij.openapi.components.State;
-import com.intellij.openapi.components.Storage;
+import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.components.*;
 import com.intellij.openapi.options.BaseConfigurable;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
@@ -24,14 +23,6 @@ import java.awt.*;
  *
  * @author Dmitry Kashin
  */
-@State(
-  name = "KeyPromoterConfiguration",
-  storages = {
-    @Storage(
-      file = "$APP_CONFIG$/KeyPromoter.xml",
-      id = "KeyPromoterConfiguration"
-    )}
-)
 public class KeyPromoterConfiguration extends BaseConfigurable implements SearchableConfigurable, PersistentStateComponent<KeyPromoterConfiguration> {
 
     JPanel myConfigPanel;
@@ -49,8 +40,7 @@ public class KeyPromoterConfiguration extends BaseConfigurable implements Search
     private JSpinner myProposeToCreateShortcutCount;
     private JTextPane myPopupTemplate;
 
-    private KeyPromoterSettings mySettings = new KeyPromoterSettings();
-
+    private KeyPromoterSettings keyPromoterSettings = ServiceManager.getService(KeyPromoterSettings.class);
 
     @NotNull
     public String getId() {
@@ -80,61 +70,61 @@ public class KeyPromoterConfiguration extends BaseConfigurable implements Search
     }
 
     public boolean isModified() {
-        if (myMenus.isSelected() != mySettings.isMenusEnabled()) return true;
-        if (myToolbarButtons.isSelected() != mySettings.isToolbarButtonsEnabled()) return true;
-        if (myToolWindowButtons.isSelected() != mySettings.isToolWindowButtonsEnabled()) return true;
-        if (myAllButtons.isSelected() != mySettings.isAllButtonsEnabled()) return true;
-        if (myTextColor.getSelectedColor() != mySettings.getTextColor()) return true;
-        if (myBackgroundColor.getSelectedColor() != mySettings.getBackgroundColor()) return true;
-        if (myBorderColor.getSelectedColor() != mySettings.getBorderColor()) return true;
-        if (!myDisplayTime.getValue().equals(mySettings.getDisplayTime())) return true;
-        if (!myAnimationDelay.getValue().equals(mySettings.getFlashAnimationDelay())) return true;
-        if (!myProposeToCreateShortcutCount.getValue().equals(mySettings.getProposeToCreateShortcutCount()))
+        if (myMenus.isSelected() != keyPromoterSettings.isMenusEnabled()) return true;
+        if (myToolbarButtons.isSelected() != keyPromoterSettings.isToolbarButtonsEnabled()) return true;
+        if (myToolWindowButtons.isSelected() != keyPromoterSettings.isToolWindowButtonsEnabled()) return true;
+        if (myAllButtons.isSelected() != keyPromoterSettings.isAllButtonsEnabled()) return true;
+        if (myTextColor.getSelectedColor() != keyPromoterSettings.getTextColor()) return true;
+        if (myBackgroundColor.getSelectedColor() != keyPromoterSettings.getBackgroundColor()) return true;
+        if (myBorderColor.getSelectedColor() != keyPromoterSettings.getBorderColor()) return true;
+        if (!myDisplayTime.getValue().equals(keyPromoterSettings.getDisplayTime())) return true;
+        if (!myAnimationDelay.getValue().equals(keyPromoterSettings.getFlashAnimationDelay())) return true;
+        if (!myProposeToCreateShortcutCount.getValue().equals(keyPromoterSettings.getProposeToCreateShortcutCount()))
             return true;
-        if (!myPopupTemplate.getText().equals(mySettings.getPopupTemplate())) return true;
-        if (myFixedTipPosition.isSelected() != mySettings.isFixedTipPosition()) return true;
+        if (!myPopupTemplate.getText().equals(keyPromoterSettings.getPopupTemplate())) return true;
+        if (myFixedTipPosition.isSelected() != keyPromoterSettings.isFixedTipPosition()) return true;
         return false;
     }
 
     public void apply() throws ConfigurationException {
-        mySettings.setMenusEnabled(myMenus.isSelected());
-        mySettings.setToolbarButtonsEnabled(myToolbarButtons.isSelected());
-        mySettings.setToolWindowButtonsEnabled(myToolWindowButtons.isSelected());
-        mySettings.setAllButtonsEnabled(myAllButtons.isSelected());
-        mySettings.setTextColor(myTextColor.getSelectedColor());
-        mySettings.setBackgroundColor(myBackgroundColor.getSelectedColor());
-        mySettings.setBorderColor(myBorderColor.getSelectedColor());
-        mySettings.setDisplayTime(new Integer(myDisplayTime.getValue().toString()));
-        mySettings.setFlashAnimationDelay(new Integer(myAnimationDelay.getValue().toString()));
-        mySettings.setProposeToCreateShortcutCount(new Integer(myProposeToCreateShortcutCount.getValue().toString()));
-        mySettings.setPopupTemplate(myPopupTemplate.getText());
-        mySettings.setFixedTipPosistion(myFixedTipPosition.isSelected());
+        keyPromoterSettings.setMenusEnabled(myMenus.isSelected());
+        keyPromoterSettings.setToolbarButtonsEnabled(myToolbarButtons.isSelected());
+        keyPromoterSettings.setToolWindowButtonsEnabled(myToolWindowButtons.isSelected());
+        keyPromoterSettings.setAllButtonsEnabled(myAllButtons.isSelected());
+        keyPromoterSettings.setTextColor(myTextColor.getSelectedColor());
+        keyPromoterSettings.setBackgroundColor(myBackgroundColor.getSelectedColor());
+        keyPromoterSettings.setBorderColor(myBorderColor.getSelectedColor());
+        keyPromoterSettings.setDisplayTime(new Integer(myDisplayTime.getValue().toString()));
+        keyPromoterSettings.setFlashAnimationDelay(new Integer(myAnimationDelay.getValue().toString()));
+        keyPromoterSettings.setProposeToCreateShortcutCount(new Integer(myProposeToCreateShortcutCount.getValue().toString()));
+        keyPromoterSettings.setPopupTemplate(myPopupTemplate.getText());
+        keyPromoterSettings.setFixedTipPosistion(myFixedTipPosition.isSelected());
     }
 
     public void reset() {
-        myMenus.setSelected(mySettings.isMenusEnabled());
-        myToolbarButtons.setSelected(mySettings.isToolbarButtonsEnabled());
-        myToolWindowButtons.setSelected(mySettings.isToolWindowButtonsEnabled());
-        myAllButtons.setSelected(mySettings.isAllButtonsEnabled());
-        myTextColor.setSelectedColor(mySettings.getTextColor());
-        myBackgroundColor.setSelectedColor(mySettings.getBackgroundColor());
-        myBorderColor.setSelectedColor(mySettings.getBorderColor());
-        myDisplayTime.setValue(mySettings.getDisplayTime());
-        myAnimationDelay.setValue(mySettings.getFlashAnimationDelay());
-        myProposeToCreateShortcutCount.setValue(mySettings.getProposeToCreateShortcutCount());
-        myPopupTemplate.setText(mySettings.getPopupTemplate());
-        myFixedTipPosition.setSelected(mySettings.isFixedTipPosition());
+        myMenus.setSelected(keyPromoterSettings.isMenusEnabled());
+        myToolbarButtons.setSelected(keyPromoterSettings.isToolbarButtonsEnabled());
+        myToolWindowButtons.setSelected(keyPromoterSettings.isToolWindowButtonsEnabled());
+        myAllButtons.setSelected(keyPromoterSettings.isAllButtonsEnabled());
+        myTextColor.setSelectedColor(keyPromoterSettings.getTextColor());
+        myBackgroundColor.setSelectedColor(keyPromoterSettings.getBackgroundColor());
+        myBorderColor.setSelectedColor(keyPromoterSettings.getBorderColor());
+        myDisplayTime.setValue(keyPromoterSettings.getDisplayTime());
+        myAnimationDelay.setValue(keyPromoterSettings.getFlashAnimationDelay());
+        myProposeToCreateShortcutCount.setValue(keyPromoterSettings.getProposeToCreateShortcutCount());
+        myPopupTemplate.setText(keyPromoterSettings.getPopupTemplate());
+        myFixedTipPosition.setSelected(keyPromoterSettings.isFixedTipPosition());
     }
 
     public void disposeUIResources() {
     }
 
     public void setSettings(KeyPromoterSettings settings) {
-        mySettings = settings;
+        keyPromoterSettings = settings;
     }
 
     public KeyPromoterSettings getSettings() {
-        return mySettings;
+        return keyPromoterSettings;
     }
 
     public KeyPromoterConfiguration getState() {

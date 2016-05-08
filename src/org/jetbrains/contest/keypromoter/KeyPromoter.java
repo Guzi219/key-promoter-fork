@@ -46,7 +46,6 @@ public class KeyPromoter implements ApplicationComponent, AWTEventListener {
 
     // DataContext field to get frame on Mac for example
     private Field myMenuItemDataContextField;
-    private KeyPromoterSettings mySettings;
 
     // Alarm object to perform animation effects
     private Alarm myAlarm = new Alarm(Alarm.ThreadToUse.SHARED_THREAD);
@@ -59,13 +58,13 @@ public class KeyPromoter implements ApplicationComponent, AWTEventListener {
     private KeyPromoterPersistentStats statsService = ServiceManager.getService(KeyPromoterPersistentStats
             .class);
 
+    private KeyPromoterSettings keyPromoterSettings = ServiceManager.getService(KeyPromoterSettings.class);
+
     public void initComponent() {
 
         stats = statsService.getStats();
 
         Toolkit.getDefaultToolkit().addAWTEventListener(this, AWTEvent.MOUSE_EVENT_MASK | AWTEvent.WINDOW_EVENT_MASK | AWTEvent.WINDOW_STATE_EVENT_MASK/* | AWTEvent.KEY_EVENT_MASK*/);
-        KeyPromoterConfiguration component = ApplicationManager.getApplication().getComponent(KeyPromoterConfiguration.class);
-        mySettings = component.getSettings();
 
         // DataContext field to get frame on Mac for example
         myMenuItemDataContextField = KeyPromoterUtils.getFieldOfType(ActionMenuItem.class, DataContext.class);
@@ -110,14 +109,14 @@ public class KeyPromoter implements ApplicationComponent, AWTEventListener {
         AnAction anAction = null;
 
 
-        if (mySettings.isToolWindowButtonsEnabled() && source instanceof StripeButton) {
+        if (keyPromoterSettings.isToolWindowButtonsEnabled() && source instanceof StripeButton) {
             // This is hack!!!
             char mnemonic = ((char) ((StripeButton) source).getMnemonic2());
             if (mnemonic >= '0' && mnemonic <= '9') {
                 shortcutText = "Alt+" + mnemonic;
                 description = ((StripeButton) source).getText();
             }
-        } else if (mySettings.isAllButtonsEnabled() && source instanceof JButton) {
+        } else if (keyPromoterSettings.isAllButtonsEnabled() && source instanceof JButton) {
             char mnemonic = ((char) ((JButton) source).getMnemonic());
             if (mnemonic > 0) {
                 // Not respecting Mac Meta key yet
@@ -136,8 +135,8 @@ public class KeyPromoter implements ApplicationComponent, AWTEventListener {
                 field = myClassFields.get(source.getClass());
             }
             try {
-                if ((mySettings.isMenusEnabled() && source instanceof ActionMenuItem) ||
-                        (mySettings.isToolbarButtonsEnabled() && source instanceof ActionButton)) {
+                if ((keyPromoterSettings.isMenusEnabled() && source instanceof ActionMenuItem) ||
+                        (keyPromoterSettings.isToolbarButtonsEnabled() && source instanceof ActionButton)) {
                     Object actionItem = field.get(source);
                     if (actionItem instanceof AnAction) {
                         anAction = (AnAction) actionItem;
@@ -182,7 +181,7 @@ public class KeyPromoter implements ApplicationComponent, AWTEventListener {
                         withoutShortcutStats.put(id, 0);
                     }
                     withoutShortcutStats.put(id, withoutShortcutStats.get(id) + 1);
-                    if (mySettings.getProposeToCreateShortcutCount() > 0 && withoutShortcutStats.get(id) % mySettings.getProposeToCreateShortcutCount() == 0) {
+                    if (keyPromoterSettings.getProposeToCreateShortcutCount() > 0 && withoutShortcutStats.get(id) % keyPromoterSettings.getProposeToCreateShortcutCount() == 0) {
                         String actionLabel = anAction.getTemplatePresentation().getDescription();
                         if (StringUtil.isEmpty(actionLabel)) {
                             actionLabel = anAction.getTemplatePresentation().getText();
@@ -212,11 +211,11 @@ public class KeyPromoter implements ApplicationComponent, AWTEventListener {
         myTipWindow.setVisible(true);
 
         final int[] stepsCount = new int[]{1};
-        int stepDuration = (int) mySettings.getDisplayTime();
-        if (mySettings.getFlashAnimationDelay() != 0) {
-            stepsCount[0] = (int) (mySettings.getDisplayTime() / mySettings.getFlashAnimationDelay());
+        int stepDuration = (int) keyPromoterSettings.getDisplayTime();
+        if (keyPromoterSettings.getFlashAnimationDelay() != 0) {
+            stepsCount[0] = (int) (keyPromoterSettings.getDisplayTime() / keyPromoterSettings.getFlashAnimationDelay());
             // Alpha transparency decreased on each redraw by cycle
-            stepDuration = (int) mySettings.getFlashAnimationDelay();
+            stepDuration = (int) keyPromoterSettings.getFlashAnimationDelay();
         }
 
         // Repainting with specified delay and steps count
