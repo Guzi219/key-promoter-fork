@@ -4,6 +4,7 @@ import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.util.xmlb.XmlSerializerUtil;
+import com.intellij.util.xmlb.annotations.Transient;
 import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
@@ -22,12 +23,15 @@ import java.awt.*;
 )
 public class KeyPromoterSettings implements PersistentStateComponent<KeyPromoterSettings> {
 
+    /* Had to make these colors "transient", as somehow the Color class cannot be serialized properly anymore
+       Therefore, you cannot persist the color settings. Without marking this as transient, all settings will
+       get lost when changing one of the colours. */
     /** Color of text in popup */
-    public Color textColor = Color.BLACK;
+    private Color textColor = Color.BLACK;
     /** Color of border of popup */
-    public Color borderColor = Color.RED;
+    private Color borderColor = Color.RED;
     /** Background Color of popup */
-    public Color backgroundColor = new Color(0x202040);
+    private Color backgroundColor = new Color(0x202040);
 
     /** Whether popup enabled or disabled on menus clicks. */
     public boolean menusEnabled = true;
@@ -108,26 +112,32 @@ public class KeyPromoterSettings implements PersistentStateComponent<KeyPromoter
         this.allButtonsEnabled = allButtonsEnabled;
     }
 
+    @Transient
     public Color getTextColor() {
         return textColor;
     }
 
+    @Transient
     public void setTextColor(Color textColor) {
         this.textColor = textColor;
     }
 
+    @Transient
     public Color getBorderColor() {
         return borderColor;
     }
 
+    @Transient
     public void setBorderColor(Color borderColor) {
         this.borderColor = borderColor;
     }
 
+    @Transient
     public Color getBackgroundColor() {
         return backgroundColor;
     }
 
+    @Transient
     public void setBackgroundColor(Color backgroundColor) {
         this.backgroundColor = backgroundColor;
     }
