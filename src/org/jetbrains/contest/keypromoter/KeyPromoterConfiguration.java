@@ -17,6 +17,9 @@ import org.jetbrains.annotations.Nullable;
 import javax.swing.*;
 import java.awt.*;
 
+import static org.jetbrains.contest.keypromoter.KeyPromoterUtils.convertColorToMap;
+import static org.jetbrains.contest.keypromoter.KeyPromoterUtils.convertMapToColor;
+
 
 /**
  * Configuration of plugin saving and editing.
@@ -91,9 +94,9 @@ public class KeyPromoterConfiguration extends BaseConfigurable implements Search
         keyPromoterSettings.setToolbarButtonsEnabled(myToolbarButtons.isSelected());
         keyPromoterSettings.setToolWindowButtonsEnabled(myToolWindowButtons.isSelected());
         keyPromoterSettings.setAllButtonsEnabled(myAllButtons.isSelected());
-        keyPromoterSettings.setTextColor(myTextColor.getSelectedColor());
-        keyPromoterSettings.setBackgroundColor(myBackgroundColor.getSelectedColor());
-        keyPromoterSettings.setBorderColor(myBorderColor.getSelectedColor());
+        keyPromoterSettings.setTextColor(convertColorToMap(myTextColor.getSelectedColor()));
+        keyPromoterSettings.setBackgroundColor(convertColorToMap(myBackgroundColor.getSelectedColor()));
+        keyPromoterSettings.setBorderColor(convertColorToMap(myBorderColor.getSelectedColor()));
         keyPromoterSettings.setDisplayTime(new Integer(myDisplayTime.getValue().toString()));
         keyPromoterSettings.setFlashAnimationDelay(new Integer(myAnimationDelay.getValue().toString()));
         keyPromoterSettings.setProposeToCreateShortcutCount(new Integer(myProposeToCreateShortcutCount.getValue().toString()));
@@ -106,9 +109,9 @@ public class KeyPromoterConfiguration extends BaseConfigurable implements Search
         myToolbarButtons.setSelected(keyPromoterSettings.isToolbarButtonsEnabled());
         myToolWindowButtons.setSelected(keyPromoterSettings.isToolWindowButtonsEnabled());
         myAllButtons.setSelected(keyPromoterSettings.isAllButtonsEnabled());
-        myTextColor.setSelectedColor(keyPromoterSettings.getTextColor());
-        myBackgroundColor.setSelectedColor(keyPromoterSettings.getBackgroundColor());
-        myBorderColor.setSelectedColor(keyPromoterSettings.getBorderColor());
+        myTextColor.setSelectedColor(convertMapToColor(keyPromoterSettings.getTextColor()));
+        myBackgroundColor.setSelectedColor(convertMapToColor(keyPromoterSettings.getBackgroundColor()));
+        myBorderColor.setSelectedColor(convertMapToColor(keyPromoterSettings.getBorderColor()));
         myDisplayTime.setValue(keyPromoterSettings.getDisplayTime());
         myAnimationDelay.setValue(keyPromoterSettings.getFlashAnimationDelay());
         myProposeToCreateShortcutCount.setValue(keyPromoterSettings.getProposeToCreateShortcutCount());

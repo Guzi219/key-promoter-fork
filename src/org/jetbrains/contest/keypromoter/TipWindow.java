@@ -8,6 +8,8 @@ import java.awt.*;
 import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
 
+import static org.jetbrains.contest.keypromoter.KeyPromoterUtils.convertMapToColor;
+
 /**
  * Popup window with information about missed shortcut. Contains shortcut keys and number of invocations by mouse.
  * @author Dmitry Kashin
@@ -55,7 +57,7 @@ public class TipWindow extends JWindow {
             myAlphaValue = 0.5f;
             setOpaque(false);
             setText(text);
-            setForeground(keyPromoterSettings.getTextColor());
+            setForeground(convertMapToColor(keyPromoterSettings.getTextColor()));
         }
 
         // some painting fun
@@ -76,7 +78,7 @@ public class TipWindow extends JWindow {
             }
 
             // Set the composite on the Graphics2D object.
-            g2d.setColor(keyPromoterSettings.getBorderColor());
+            g2d.setColor(convertMapToColor(keyPromoterSettings.getBorderColor()));
             g2d.setComposite(alphaComp);
 
             Area border = new Area(new Rectangle2D.Double(0, 0, getWidth(), getHeight()));
@@ -85,7 +87,7 @@ public class TipWindow extends JWindow {
 
             // Restore the old composite.
             g2d.setComposite(oldComp);
-            Color backgroundColor = keyPromoterSettings.getBackgroundColor();
+            Color backgroundColor = convertMapToColor(keyPromoterSettings.getBackgroundColor());
             g2d.setColor(new Color(backgroundColor.getRed(), backgroundColor.getGreen(), backgroundColor.getBlue(), 64));
             g2d.fillRect(3, 3, getWidth() - 6, getHeight() - 6);
             super.paintComponent(g);

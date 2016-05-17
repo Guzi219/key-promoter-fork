@@ -7,8 +7,11 @@ import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.keymap.KeymapUtil;
 import com.intellij.openapi.util.text.StringUtil;
 
+import java.awt.Color;
 import java.lang.reflect.Field;
 import java.text.MessageFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Date: 05.10.2006
@@ -67,5 +70,17 @@ public class KeyPromoterUtils {
             buffer.append("'").append(KeymapUtil.getShortcutText(shortcut)).append("'");
         }
         return buffer.toString();
+    }
+
+    public static Map<String, Integer> convertColorToMap(Color color) {
+        Map returnValue = new HashMap<String, Integer>();
+        returnValue.put("red", color.getRed());
+        returnValue.put("green", color.getGreen());
+        returnValue.put("blue", color.getBlue());
+        return returnValue;
+    }
+
+    public static Color convertMapToColor(Map<String, Integer> map) {
+        return new Color(map.get("red"), map.get("green"), map.get("blue"));
     }
 }

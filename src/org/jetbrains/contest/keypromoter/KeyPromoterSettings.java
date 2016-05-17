@@ -8,6 +8,10 @@ import com.intellij.util.xmlb.annotations.Transient;
 import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
+import java.util.Map;
+
+import static org.jetbrains.contest.keypromoter.KeyPromoterUtils.convertColorToMap;
+import static org.jetbrains.contest.keypromoter.KeyPromoterUtils.convertMapToColor;
 
 /**
  * Settings for KeyPromoter plugin.
@@ -112,34 +116,28 @@ public class KeyPromoterSettings implements PersistentStateComponent<KeyPromoter
         this.allButtonsEnabled = allButtonsEnabled;
     }
 
-    @Transient
-    public Color getTextColor() {
-        return textColor;
+    public Map<String, Integer> getTextColor() {
+        return convertColorToMap(textColor);
     }
 
-    @Transient
-    public void setTextColor(Color textColor) {
-        this.textColor = textColor;
+    public void setTextColor(Map<String, Integer> textColor) {
+        this.textColor = convertMapToColor(textColor);
     }
 
-    @Transient
-    public Color getBorderColor() {
-        return borderColor;
+    public Map<String, Integer> getBorderColor() {
+        return convertColorToMap(borderColor);
     }
 
-    @Transient
-    public void setBorderColor(Color borderColor) {
-        this.borderColor = borderColor;
+    public void setBorderColor(Map<String, Integer> borderColor) {
+        this.borderColor = convertMapToColor(borderColor);
     }
 
-    @Transient
-    public Color getBackgroundColor() {
-        return backgroundColor;
+    public Map<String, Integer> getBackgroundColor() {
+        return convertColorToMap(backgroundColor);
     }
 
-    @Transient
-    public void setBackgroundColor(Color backgroundColor) {
-        this.backgroundColor = backgroundColor;
+    public void setBackgroundColor(Map<String, Integer> backgroundColor) {
+        this.backgroundColor = convertMapToColor(backgroundColor);
     }
 
     public boolean isFixedTipPosition() {
