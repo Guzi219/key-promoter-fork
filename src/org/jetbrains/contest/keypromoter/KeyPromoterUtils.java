@@ -77,10 +77,11 @@ public class KeyPromoterUtils {
         returnValue.put("red", color.getRed());
         returnValue.put("green", color.getGreen());
         returnValue.put("blue", color.getBlue());
+        returnValue.put("alpha", color.getAlpha());
         return returnValue;
     }
 
     public static Color convertMapToColor(Map<String, Integer> map) {
-        return new Color(map.get("red"), map.get("green"), map.get("blue"));
+        return new Color(map.get("red"), map.get("green"), map.get("blue"), map.get("alpha"));
     }
 }
