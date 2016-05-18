@@ -6,6 +6,10 @@
   <version>2.0.4</version>
   <vendor email="kashin_d@hotmail.ru">Dmitry Kashin </vendor>
   <change-notes><![CDATA[<ul>
+        <li> 2.0.4 </li>
+        <ul>
+          <li>Fix persisting color settings</li>
+        </ul>
         <li> 2.0.3 </li>
         <ul>
           <li>Make settings work again for 2016.1 - https://github.com/athiele/key-promoter-fork/issues/12</li>
