@@ -9,7 +9,8 @@ Additional Features / Modifications
 -----------------------------------
 * Statistics are persisted and thereby not deleted when closing the IDE.
 * A top ten missed shortcuts window is added to the IDE. Thereby, it is more obvious which shortcut combinations are worth learning for you to increase your personal efficiency.
-* A button that resets your statistics
+* A button that resets your statistics. 
+* Support for up-to-date IntelliJ versions. 
 
 Screenshot
 ----------
@@ -23,6 +24,10 @@ https://github.com/athiele/key-promoter-fork/releases
 Installation
 ------------
 Go to the "Plugins" section of your IntelliJ IDE and choose "Install plugin from disk". Choose the downloaded .jar or .zip file. Finally, restart your IDE and enjoy the plugin.
+
+Contribution
+------------
+Contributions and Pull Requests are welcome! 
 
 Credits and License of the Key Promoter Plugin
 ----------------------------------------------
