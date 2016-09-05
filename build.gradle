@@ -6,7 +6,8 @@ apply plugin: 'org.jetbrains.intellij'
 apply plugin: 'java'
 
 intellij {
-    version = '163.3512.7'
+    version = '2016.2'
+    updateSinceUntilBuild = false
     pluginName = 'key-promoter'
 }
 

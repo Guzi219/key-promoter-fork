@@ -8,7 +8,7 @@
   <change-notes><![CDATA[<ul>
         <li> 2.0.6 </li>
         <ul>
-          <li>Compatibility with IntelliJ 2016.3</li>
+          <li>Compatibility with IntelliJ 2016.2 and newer builds (e.g. 2016.3 EAP)</li>
         </ul>
         <li> 2.0.5 </li>
         <ul>
@@ -104,7 +104,7 @@
         </ul>
     </ul>]]>
   </change-notes>
-  <idea-version since-build="107.587"/>
+  <idea-version since-build="162"/>
   <application-components>
     <component>
       <implementation-class>org.jetbrains.contest.keypromoter.KeyPromoter</implementation-class>
