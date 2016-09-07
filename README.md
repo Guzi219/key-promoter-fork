@@ -19,7 +19,14 @@ Screenshot
 
 Download
 --------
+
+If you are using IntelliJ 2016.2 or greater, simply download the latest release:
 https://github.com/athiele/key-promoter-fork/releases
+
+In case you are using IntelliJ 2016.1 or lower (where the version identifier is 145.XX.XX or lower), you need to install this version:
+https://github.com/athiele/key-promoter-fork/releases/tag/2.0.4
+(this is also suitable for Android Studio 2.2 RC)
+
 
 Installation
 ------------
