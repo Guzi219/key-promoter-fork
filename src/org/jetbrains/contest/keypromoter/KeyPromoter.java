@@ -7,7 +7,6 @@ import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.actionSystem.impl.ActionButton;
 import com.intellij.openapi.actionSystem.impl.ActionMenuItem;
 import com.intellij.openapi.actionSystem.impl.actionholder.ActionRef;
-import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.ApplicationComponent;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.keymap.impl.ui.EditKeymapsDialog;
@@ -60,6 +59,8 @@ public class KeyPromoter implements ApplicationComponent, AWTEventListener {
 
     private KeyPromoterSettings keyPromoterSettings = ServiceManager.getService(KeyPromoterSettings.class);
 
+    private String osName = System.getProperty("os.name");
+
     public void initComponent() {
 
         stats = statsService.getStats();
@@ -105,22 +106,25 @@ public class KeyPromoter implements ApplicationComponent, AWTEventListener {
         final Object source = e.getSource();
         String shortcutText = "";
         String description = "";
-
+        String metaKey = "Alt+";
         AnAction anAction = null;
 
+        // Figuring out if we are running on a mac
+        if (osName.contains("OS X")) {
+            metaKey = "⌘";
+        }
 
         if (keyPromoterSettings.isToolWindowButtonsEnabled() && source instanceof StripeButton) {
             // This is hack!!!
             char mnemonic = ((char) ((StripeButton) source).getMnemonic2());
             if (mnemonic >= '0' && mnemonic <= '9') {
-                shortcutText = "Alt+" + mnemonic;
+                shortcutText = "\'" + metaKey + mnemonic + "\'";
                 description = ((StripeButton) source).getText();
             }
         } else if (keyPromoterSettings.isAllButtonsEnabled() && source instanceof JButton) {
             char mnemonic = ((char) ((JButton) source).getMnemonic());
             if (mnemonic > 0) {
-                // Not respecting Mac Meta key yet
-                shortcutText = "Alt+" + mnemonic;
+                shortcutText = "\'" + metaKey + mnemonic + "\'";
                 description = ((JButton) source).getText();
             }
         } else {
