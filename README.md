@@ -15,7 +15,7 @@ Additional Features / Modifications
 Screenshot
 ----------
 
-  ![screenshot](https://cloud.githubusercontent.com/assets/1597524/6314559/48764d3e-b9e3-11e4-8fbc-a86fcce5178b.png)
+  ![screenshot](https://cloud.githubusercontent.com/assets/1597524/18762140/dfdd7390-8107-11e6-8e44-eff216fb8178.JPG)
 
 Download
 --------
