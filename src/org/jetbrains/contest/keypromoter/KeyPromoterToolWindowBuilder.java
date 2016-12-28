@@ -6,13 +6,11 @@ import com.intellij.openapi.ui.Messages;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
 import java.util.*;
 
 /**
  * Created by athiele on 10.01.2015.
+ *
  */
 public class KeyPromoterToolWindowBuilder {
 
@@ -21,32 +19,22 @@ public class KeyPromoterToolWindowBuilder {
 
     private JButton refreshButton;
     private JPanel panel;
-    private JList list1;
+    private JList<String> list1;
     private JButton resetStatisticsButton;
     private String[] topTen = new String[10];
 
-    public KeyPromoterToolWindowBuilder() {
-        refreshButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                updateTopTen();
-            }
-        });
-        resetStatisticsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                resetStats();
-            }
-        });
+    KeyPromoterToolWindowBuilder() {
+        refreshButton.addActionListener(e -> updateTopTen());
+        resetStatisticsButton.addActionListener(e -> resetStats());
     }
 
-    public JPanel createToolWindowPanel() {
+    JPanel createToolWindowPanel() {
         updateTopTen();
         return panel;
     }
 
     private void resetStats() {
-        if (Messages.showYesNoDialog("Do you really want to reset your Key Promoter statistics? This cannot be undone!","Reset statistics", Messages.getQuestionIcon()) == 0) {
+        if (Messages.showYesNoDialog("Do you really want to reset your Key Promoter statistics? This cannot be undone!", "Reset Statistics", Messages.getQuestionIcon()) == 0) {
             Map<String, Integer> stats = statsService.getStats();
             stats.clear();
             statsService.setStats(stats);
@@ -74,18 +62,13 @@ public class KeyPromoterToolWindowBuilder {
     }
 
     // Sort function
-    static <K, V extends Comparable<? super V>>
+    private static <K, V extends Comparable<? super V>>
     List<Map.Entry<K, V>> sortByValues(Map<K, V> map) {
 
-        List<Map.Entry<K, V>> sortedEntries = new ArrayList<Map.Entry<K, V>>(map.entrySet());
+        List<Map.Entry<K, V>> sortedEntries = new ArrayList<>(map.entrySet());
 
         Collections.sort(sortedEntries,
-                new Comparator<Map.Entry<K, V>>() {
-                    @Override
-                    public int compare(Map.Entry<K, V> e1, Map.Entry<K, V> e2) {
-                        return e2.getValue().compareTo(e1.getValue());
-                    }
-                }
+                (e1, e2) -> e2.getValue().compareTo(e1.getValue())
         );
 
         return sortedEntries;

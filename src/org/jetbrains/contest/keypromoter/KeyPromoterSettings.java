@@ -38,24 +38,24 @@ public class KeyPromoterSettings implements PersistentStateComponent<KeyPromoter
     private Color backgroundColor = new Color(0x202040);
 
     /** Whether popup enabled or disabled on menus clicks. */
-    public boolean menusEnabled = true;
+    private boolean menusEnabled = true;
     /** Whether popup enabled or disabled on toolbar buttons clicks. */
-    public boolean toolbarButtonsEnabled = true;
+    private boolean toolbarButtonsEnabled = true;
     /** Whether popup enabled or disabled on toolwindow buttons clicks. */
-    public boolean toolWindowButtonsEnabled = true;
+    private boolean toolWindowButtonsEnabled = true;
     /** Whether popup enabled or disabled on all buttons with mnemonics clicks. */
-    public boolean allButtonsEnabled = false;
+    private boolean allButtonsEnabled = false;
 
     /** Time of popup display. */
-    public long displayTime = 3000;
+    private long displayTime = 3000;
     /** Animation delay time. */
-    public long flashAnimationDelay = 150;
+    private long flashAnimationDelay = 150;
     /** Count of invocations after which ask for creation of shortcut for actions without them. */
-    public int proposeToCreateShortcutCount = 3;
+    private int proposeToCreateShortcutCount = 3;
     /** Popup position fixed or folow the mouse clicks. */
-    public boolean fixedTipPosistion = false;
+    private boolean fixedTipPosistion = false;
     /** Popup template. */
-    public String popupTemplate = "<html>\n" +
+    private String popupTemplate = "<html>\n" +
             " <body>\n" +
             "  <table>\n" +
             "   <tr>\n" +
@@ -68,99 +68,99 @@ public class KeyPromoterSettings implements PersistentStateComponent<KeyPromoter
             " </body>\n" +
             "</html>";
 
-    public long getDisplayTime() {
+    long getDisplayTime() {
         return displayTime;
     }
 
-    public void setDisplayTime(long displayTime) {
+    void setDisplayTime(long displayTime) {
         this.displayTime = displayTime;
     }
 
-    public long getFlashAnimationDelay() {
+    long getFlashAnimationDelay() {
         return flashAnimationDelay;
     }
 
-    public void setFlashAnimationDelay(long flashAnimationDelay) {
+    void setFlashAnimationDelay(long flashAnimationDelay) {
         this.flashAnimationDelay = flashAnimationDelay;
     }
 
-    public boolean isMenusEnabled() {
+    boolean isMenusEnabled() {
         return menusEnabled;
     }
 
-    public void setMenusEnabled(boolean menusEnabled) {
+    void setMenusEnabled(boolean menusEnabled) {
         this.menusEnabled = menusEnabled;
     }
 
-    public boolean isToolbarButtonsEnabled() {
+    boolean isToolbarButtonsEnabled() {
         return toolbarButtonsEnabled;
     }
 
-    public void setToolbarButtonsEnabled(boolean toolbarButtonsEnabled) {
+    void setToolbarButtonsEnabled(boolean toolbarButtonsEnabled) {
         this.toolbarButtonsEnabled = toolbarButtonsEnabled;
     }
 
-    public boolean isToolWindowButtonsEnabled() {
+    boolean isToolWindowButtonsEnabled() {
         return toolWindowButtonsEnabled;
     }
 
-    public void setToolWindowButtonsEnabled(boolean toolWindowButtonsEnabled) {
+    void setToolWindowButtonsEnabled(boolean toolWindowButtonsEnabled) {
         this.toolWindowButtonsEnabled = toolWindowButtonsEnabled;
     }
 
-    public boolean isAllButtonsEnabled() {
+    boolean isAllButtonsEnabled() {
         return allButtonsEnabled;
     }
 
-    public void setAllButtonsEnabled(boolean allButtonsEnabled) {
+    void setAllButtonsEnabled(boolean allButtonsEnabled) {
         this.allButtonsEnabled = allButtonsEnabled;
     }
 
-    public Map<String, Integer> getTextColor() {
+    Map<String, Integer> getTextColor() {
         return convertColorToMap(textColor);
     }
 
-    public void setTextColor(Map<String, Integer> textColor) {
+    void setTextColor(Map<String, Integer> textColor) {
         this.textColor = convertMapToColor(textColor);
     }
 
-    public Map<String, Integer> getBorderColor() {
+    Map<String, Integer> getBorderColor() {
         return convertColorToMap(borderColor);
     }
 
-    public void setBorderColor(Map<String, Integer> borderColor) {
+    void setBorderColor(Map<String, Integer> borderColor) {
         this.borderColor = convertMapToColor(borderColor);
     }
 
-    public Map<String, Integer> getBackgroundColor() {
+    Map<String, Integer> getBackgroundColor() {
         return convertColorToMap(backgroundColor);
     }
 
-    public void setBackgroundColor(Map<String, Integer> backgroundColor) {
+    void setBackgroundColor(Map<String, Integer> backgroundColor) {
         this.backgroundColor = convertMapToColor(backgroundColor);
     }
 
-    public boolean isFixedTipPosition() {
+    boolean isFixedTipPosition() {
         return this.fixedTipPosistion;
     }
 
-    public void setFixedTipPosistion(boolean fixedTipPosistion) {
+    void setFixedTipPosistion(boolean fixedTipPosistion) {
         this.fixedTipPosistion = fixedTipPosistion;
     }
 
-    public int getProposeToCreateShortcutCount() {
+    int getProposeToCreateShortcutCount() {
         return proposeToCreateShortcutCount;
     }
 
-    public void setProposeToCreateShortcutCount(int proposeToCreateShortcutCount) {
+    void setProposeToCreateShortcutCount(int proposeToCreateShortcutCount) {
         this.proposeToCreateShortcutCount = proposeToCreateShortcutCount;
     }
 
-    public String getPopupTemplate() {
+    String getPopupTemplate() {
         return popupTemplate;
     }
 
-    public void setPopupTemplate(String popupTemplate) {
+    void setPopupTemplate(String popupTemplate) {
         this.popupTemplate = popupTemplate;
     }
 

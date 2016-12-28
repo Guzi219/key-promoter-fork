@@ -14,11 +14,11 @@ import static org.jetbrains.contest.keypromoter.KeyPromoterUtils.convertMapToCol
  * Popup window with information about missed shortcut. Contains shortcut keys and number of invocations by mouse.
  * @author Dmitry Kashin
  */
-public class TipWindow extends JWindow {
+class TipWindow extends JWindow {
 
     private KeyPromoterSettings keyPromoterSettings = ServiceManager.getService(KeyPromoterSettings.class);
 
-    public TipWindow(Frame owner, String text, Component sourceComponent) {
+    TipWindow(Frame owner, String text, Component sourceComponent) {
         super(owner);
         setAlwaysOnTop(true);
         JPanel contentPane = new JPanel(new BorderLayout());
@@ -45,13 +45,13 @@ public class TipWindow extends JWindow {
     /**
      * Component for displaying tip with some simple animation.
      */
-    class TipLabel extends JLabel {
+    private class TipLabel extends JLabel {
         private float myAlphaValue;
         private static final float ALPHA_STEP = 0.1f;
         private static final float START_ALPHA = 0f;
         private KeyPromoterSettings keyPromoterSettings;
 
-        public TipLabel(String text, KeyPromoterSettings keyPromoterSettings) {
+        TipLabel(String text, KeyPromoterSettings keyPromoterSettings) {
             super();
             this.keyPromoterSettings = keyPromoterSettings;
             myAlphaValue = 0.5f;

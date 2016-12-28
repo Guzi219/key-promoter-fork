@@ -17,7 +17,7 @@ import java.util.Map;
  * Date: 05.10.2006
  * Time: 15:01:47
  */
-public class KeyPromoterUtils {
+class KeyPromoterUtils {
 
     private static KeyPromoterSettings keyPromoterSettings = ServiceManager.getService(KeyPromoterSettings.class);
 
@@ -26,9 +26,9 @@ public class KeyPromoterUtils {
      *
      * @param aClass      class to inspect
      * @param targetClass target class to check field to plug
-     * @return
+     * @return field
      */
-    public static Field getFieldOfType(Class<?> aClass, Class<?> targetClass) {
+    static Field getFieldOfType(Class<?> aClass, Class<?> targetClass) {
         do {
             Field[] declaredFields = aClass.getDeclaredFields();
             for (Field declaredField : declaredFields) {
@@ -47,16 +47,16 @@ public class KeyPromoterUtils {
      * @param description  action description
      * @param shortcutText key combination
      * @param count        number of counted invocations
-     * @return
+     * @return the message
      */
-    public static String renderMessage(String description, String shortcutText, Integer count) {
+    static String renderMessage(String description, String shortcutText, Integer count) {
 
         return MessageFormat.format(keyPromoterSettings.getPopupTemplate(),
                 (StringUtil.isEmpty(description) ? shortcutText : shortcutText + "<br>(" + description + ")"),
                 count);
     }
 
-    public static String getKeyboardShortcutsText(AnAction anAction) {
+    static String getKeyboardShortcutsText(AnAction anAction) {
         Shortcut[] shortcuts = anAction.getShortcutSet().getShortcuts();
         if (shortcuts.length == 0) {
             return "";
@@ -72,8 +72,8 @@ public class KeyPromoterUtils {
         return buffer.toString();
     }
 
-    public static Map<String, Integer> convertColorToMap(Color color) {
-        Map returnValue = new HashMap<String, Integer>();
+    static Map<String, Integer> convertColorToMap(Color color) {
+        HashMap<String, Integer> returnValue = new HashMap<>();
         returnValue.put("red", color.getRed());
         returnValue.put("green", color.getGreen());
         returnValue.put("blue", color.getBlue());
@@ -81,7 +81,7 @@ public class KeyPromoterUtils {
         return returnValue;
     }
 
-    public static Color convertMapToColor(Map<String, Integer> map) {
+    static Color convertMapToColor(Map<String, Integer> map) {
         return new Color(map.get("red"), map.get("green"), map.get("blue"), map.get("alpha"));
     }
 }

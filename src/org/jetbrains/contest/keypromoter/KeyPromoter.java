@@ -41,13 +41,13 @@ import java.util.Map;
 public class KeyPromoter implements ApplicationComponent, AWTEventListener {
 
     // Fields with actions of supported classes
-    private Map<Class, Field> myClassFields = new HashMap<Class, Field>(5);
+    private Map<Class, Field> myClassFields = new HashMap<>(5);
 
     // DataContext field to get frame on Mac for example
     private Field myMenuItemDataContextField;
 
     // Alarm object to perform animation effects
-    private Alarm myAlarm = new Alarm(Alarm.ThreadToUse.SHARED_THREAD);
+    private Alarm myAlarm = new Alarm(Alarm.ThreadToUse.POOLED_THREAD);
 
     // Presentation and stats fields.
     private JWindow myTipWindow;
@@ -141,7 +141,10 @@ public class KeyPromoter implements ApplicationComponent, AWTEventListener {
             try {
                 if ((keyPromoterSettings.isMenusEnabled() && source instanceof ActionMenuItem) ||
                         (keyPromoterSettings.isToolbarButtonsEnabled() && source instanceof ActionButton)) {
-                    Object actionItem = field.get(source);
+                    Object actionItem = null;
+                    if (field != null) {
+                        actionItem = field.get(source);
+                    }
                     if (actionItem instanceof AnAction) {
                         anAction = (AnAction) actionItem;
                     } else if (actionItem instanceof ActionRef) {
@@ -168,9 +171,7 @@ public class KeyPromoter implements ApplicationComponent, AWTEventListener {
             return;
         }
         if (!StringUtil.isEmpty(shortcutText)) {
-            if (stats.get(shortcutText) == null) {
-                stats.put(shortcutText, 0);
-            }
+            stats.putIfAbsent(shortcutText, 0);
             stats.put(shortcutText, stats.get(shortcutText) + 1);
 
             // Write shortcut to the brain card
@@ -181,9 +182,7 @@ public class KeyPromoter implements ApplicationComponent, AWTEventListener {
             if (anAction != null) {
                 String id = ActionManager.getInstance().getId(anAction);
                 if (id != null) {
-                    if (withoutShortcutStats.get(id) == null) {
-                        withoutShortcutStats.put(id, 0);
-                    }
+                    withoutShortcutStats.putIfAbsent(id, 0);
                     withoutShortcutStats.put(id, withoutShortcutStats.get(id) + 1);
                     if (keyPromoterSettings.getProposeToCreateShortcutCount() > 0 && withoutShortcutStats.get(id) % keyPromoterSettings.getProposeToCreateShortcutCount() == 0) {
                         String actionLabel = anAction.getTemplatePresentation().getDescription();
