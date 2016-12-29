@@ -47,7 +47,7 @@ public class KeyPromoter implements ApplicationComponent, AWTEventListener {
     private Field myMenuItemDataContextField;
 
     // Alarm object to perform animation effects
-    private Alarm myAlarm = new Alarm(Alarm.ThreadToUse.POOLED_THREAD);
+    private Alarm myAlarm = new Alarm();
 
     // Presentation and stats fields.
     private JWindow myTipWindow;
